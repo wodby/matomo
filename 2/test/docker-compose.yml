@@ -1,0 +1,32 @@
+version: "2"
+
+services:
+  nginx:
+    image: wodby/piwik-nginx:2
+    environment:
+      NGINX_BACKEND_HOST: piwik
+    volumes:
+      - codebase:/var/www/html
+    depends_on:
+      - piwik
+
+  mariadb:
+    image: wodby/mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: piwik
+      MYSQL_PASSWORD: piwik
+      MYSQL_DATABASE: piwik
+
+  piwik:
+    image: $IMAGE
+    environment:
+      WODBY_APP_NAME: piwik
+    depends_on:
+      - mariadb
+    volumes:
+      - codebase:/var/www/html
+      - ./tests.sh:/usr/local/bin/tests.sh
+
+volumes:
+  codebase:
