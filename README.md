@@ -14,7 +14,7 @@ Images are based on [wodby/php](https://github.com/wodby/php), built via [Travis
 | Tag                                                          | Piwik  | PHP | Alpine Linux |
 | ------------------------------------------------------------ | ------ | --- | ------------ |
 | [3](https://github.com/wodby/piwik/tree/master/3/Dockerfile) | 3.0.4  | 7.1 | 3.6          |
-| [2](https://github.com/wodby/piwik/tree/master/2/Dockerfile) | 2.17.1 | 7.0 | 3.6          |
+| [2](https://github.com/wodby/piwik/tree/master/2/Dockerfile) | 2.17.1 | 7.1 | 3.6          |
 
 ## Environment Variables
 
