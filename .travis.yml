@@ -8,7 +8,6 @@ env:
     - LATEST_TAG=3.3
   matrix:
     - TAG=3.3 MATOMO_VER=3.3.0 EXTRA_TAG=3
-    - TAG=2.17 MATOMO_VER=2.17.1 EXTRA_TAG=2
 
 script:
   - make && make test

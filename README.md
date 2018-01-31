@@ -16,7 +16,6 @@
 Supported tags and respective `Dockerfile` links:
 
 * `3`, `3.3`, `latest` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
-* `2`, `2.17` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
 
 For better reliability we additionally release images with stability tags (`wodby/matomo:3.3-X.X.X`) which correspond to [git tags](https://github.com/wodby/matomo/releases). We **strongly recommend** using images only with stability tags. 
 
