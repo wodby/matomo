@@ -1,21 +1,46 @@
-# Piwik Docker Container Image
+# Matomo Docker Container Image
 
-[![Build Status](https://travis-ci.org/wodby/piwik.svg?branch=master)](https://travis-ci.org/wodby/piwik)
-[![Docker Pulls](https://img.shields.io/docker/pulls/wodby/piwik.svg)](https://hub.docker.com/r/wodby/piwik)
-[![Docker Stars](https://img.shields.io/docker/stars/wodby/piwik.svg)](https://hub.docker.com/r/wodby/piwik)
+[![Build Status](https://travis-ci.org/wodby/matomo.svg?branch=master)](https://travis-ci.org/wodby/matomo)
+[![Docker Pulls](https://img.shields.io/docker/pulls/wodby/matomo.svg)](https://hub.docker.com/r/wodby/matomo)
+[![Docker Stars](https://img.shields.io/docker/stars/wodby/matomo.svg)](https://hub.docker.com/r/wodby/matomo)
+[![Docker Layers](https://images.microbadger.com/badges/image/wodby/matomo.svg)](https://microbadger.com/images/wodby/matomo)
 [![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
 ## Docker Images
 
-Images are based on [wodby/php](https://github.com/wodby/php), built via [Travis CI](https://travis-ci.org/wodby/piwik) and published on [Docker Hub](https://hub.docker.com/r/wodby/piwik). 
+* All images are based on Alpine Linux
+* Base image: [wodby/php](https://github.com/wodby/php)
+* [TravisCI builds](https://travis-ci.org/wodby/matomo) 
+* [Docker Hub](https://hub.docker.com/r/wodby/matomo)
 
-## Versions
+Supported tags and respective `Dockerfile` links:
 
-| Tag                                                          | Piwik  | PHP | Alpine Linux |
-| ------------------------------------------------------------ | ------ | --- | ------------ |
-| [3](https://github.com/wodby/piwik/tree/master/3/Dockerfile) | 3.0.4  | 7.1 | 3.6          |
-| [2](https://github.com/wodby/piwik/tree/master/2/Dockerfile) | 2.17.1 | 7.1 | 3.6          |
+* `3`, `3.3`, `latest` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
+* `2`, `2.17` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
+
+For better reliability we additionally release images with stability tags (`wodby/matomo:3.3-X.X.X`) which correspond to [git tags](https://github.com/wodby/matomo/releases). We **strongly recommend** using images only with stability tags. 
 
 ## Environment Variables
 
-See [wodby/php](https://github.com/wodby/php)
+| Variable                            | Default Value        | Description |
+| ----------------------------------- | -------------------- | ----------- |
+| `PHP_ALWAYS_POPULATE_RAW_POST_DATA` | `1`                  |             |
+| `PHP_GEOIP_CUSTOM_DIR`              | `/var/www/html/misc` |             |
+
+See [wodby/php](https://github.com/wodby/php) to see all variables
+
+## Orchestration Actions
+
+Usage:
+```
+make COMMAND [params ...]
+ 
+commands:
+    init
+```
+
+See [wodby/php](https://github.com/wodby/php) to see all actions
+
+## Deployment
+
+Deploy Matomo to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://cloud.wodby.com/stackhub).

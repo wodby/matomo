@@ -8,5 +8,5 @@ fi
 
 # Automatically trigger init action when running outside Wodby.
 if [[ -z "${WODBY_APP_NAME}" ]]; then
-    su-exec www-data make init -f /usr/local/bin/actions.mk
+    make init -f /usr/local/bin/actions.mk
 fi

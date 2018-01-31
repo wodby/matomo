@@ -1,31 +1,39 @@
-language: python
-
-sudo: required
+language: bash
 
 services:
   - docker
 
 env:
   global:
-    - LATEST_VERSION=3
+    - LATEST_TAG=3.3
   matrix:
-    - VERSION=3
-    - VERSION=2
+    - TAG=3.3 MATOMO_VER=3.3.0 EXTRA_TAG=3
+    - TAG=2.17 MATOMO_VER=2.17.1 EXTRA_TAG=2
 
 script:
-  - cd ./$VERSION
   - make && make test
 
 after_success: |
-  if [ "$TRAVIS_PULL_REQUEST" == "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ -n "$TRAVIS_TAG" ]); then
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
+    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+
+    if [[ -n "${TRAVIS_TAG}" ]]; then
+      export STABILITY_TAG="${TRAVIS_TAG}"
+    fi
+
+    if [[ -n "${EXTRA_TAG}" ]]; then
+      make release TAG="${EXTRA_TAG}"
+    fi
+
     make release
 
-    if [ -n "$TRAVIS_TAG" ]; then
-      make VERSION="$VERSION-$TRAVIS_TAG" release
-    fi
-
-    if [ "$VERSION" == "$LATEST_VERSION" ]; then
-      make VERSION=latest release
+    if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+      make release TAG="latest"
     fi
   fi
+
+notifications:
+  on_failure: never
+  slack:
+    secure: |
+      tK3FZHmmrPRnGhdeUK5M9ccuPcTyXSmKHnlEJ02EHJZQaiH6JzT7pvvTqpFemxEuTfKfQX0+7aSqMLMTD3XSBSKv9CDbZhUYRM3/41Jdby1ewodk3i7NLAGwpJRFlsaAyxaRg+9Kr8Fy3Quy1CyDPVf72BTGFAmIeJtOjUmyFhdyB+Qa9y+Vnm+OsCsW0SumqkJbsQAj8jc8HIHalhfgbRFvvB9S8Dcb4mhZi7smXfDIKKyMBHUoN9APxt9YywmU84eMjTfQqOGXM5djlwlDJHKRJcHYdRpyJyCR7h4839+4iO0rmpNBd/iB9tsctkZnOn2BG9Dks23GNa17KtA1kkQH7EFPg09RQdDxB2jHfs/ORnGeD4dihBpee3HGbN4xiJpZeAWeUR/cUX946u2XTztot+/z/ESbE0b895X8i7RDu/WmL/AKtN2IdivM33u1lfp2l9Ka9CgvC6yki8w/FjewHMw3CkiKA4DW0McqeZUpCv1789C6CKE+Sbu140QoWXbKQSmt1ah18FcJuiwrP6mxxyJyZL0X9nMaTnsG6BZJyowgiFGL0Zs5EsGyBDsCSXDstbp6YSRLHzCJqWS0l1sTPk6H/E4dI/R9owjBlD2eS1dzRQBmvy6tvtF7rMncBZcylHVyQ0QJvK2dxNS3nCKhO4LaAIuQAy7j7iHeKWo=

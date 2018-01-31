@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  nginx:
+    image: wodby/php-nginx
+    environment:
+      NGINX_BACKEND_HOST: matomo
+    volumes:
+      - codebase:/var/www/html
+    depends_on:
+      - matomo
+
+  matomo:
+    image: $IMAGE
+    environment:
+      WODBY_APP_NAME: matomo
+    volumes:
+      - codebase:/var/www/html
+      - ./tests.sh:/usr/local/bin/tests.sh
+
+volumes:
+  codebase:
