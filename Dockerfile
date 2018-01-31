@@ -20,7 +20,7 @@ RUN set -ex; \
     \
     apk add --no-cache -t .matomo-build-deps gnupg; \
     \
-    # Download and verifu matomo.
+    # Download and verify matomo.
     cd /tmp; \
     curl -o matomo.tar.gz -Lskj "${MATOMO_URL}"; \
     curl -o matomo.tar.gz.asc -Lskj "${MATOMO_ASC_URL}"; \
@@ -36,6 +36,8 @@ RUN set -ex; \
     gunzip /usr/src/matomo/misc/GeoIPCity.dat.gz; \
     \
     chown -R www-data:www-data /usr/src/matomo; \
+    chmod -R 775 /usr/src/matomo/tmp; \
+    \
     mv /usr/local/bin/actions.mk /usr/local/bin/php.mk; \
     \
     apk del --purge .matomo-build-deps; \

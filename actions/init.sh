@@ -8,6 +8,6 @@ fi
 
 if [[ ! -f "${APP_ROOT}/piwik.php" ]]; then
     echo >&2 "${APP_NAME} not found in ${APP_ROOT} - copying now..."
-    rsync -rlt "/usr/src/matomo/" "${APP_ROOT}/"
+    rsync -rplt "/usr/src/matomo/" "${APP_ROOT}/"
     echo >&2 "Complete! ${APP_NAME} has been successfully copied to ${APP_ROOT}"
 fi
