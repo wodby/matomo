@@ -37,6 +37,7 @@ RUN set -ex; \
     \
     chown -R www-data:www-data /usr/src/matomo; \
     chmod -R 775 /usr/src/matomo/tmp; \
+    chown php-fpm:www-data /var/www/html/config /var/www/html/piwik.js; \
     \
     mv /usr/local/bin/actions.mk /usr/local/bin/php.mk; \
     \
