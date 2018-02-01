@@ -10,7 +10,8 @@ env:
     - TAG=3.3 MATOMO_VER=3.3.0 EXTRA_TAG=3
 
 script:
-  - make && make test
+  - travis_retry make
+  - make test
 
 after_success: |
   if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
