@@ -27,7 +27,6 @@ RUN set -ex; \
     export GNUPGHOME="$(mktemp -d)"; \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${GPG_KEY}"; \
     gpg --batch --verify matomo.tar.gz.asc matomo.tar.gz; \
-    rm -r "${GNUPGHOME}" matomo.tar.gz.asc; \
     mkdir -p /usr/src/matomo; \
     tar zxf matomo.tar.gz --strip-components=1 -C /usr/src/matomo; \
     \
