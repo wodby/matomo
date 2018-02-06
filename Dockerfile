@@ -35,8 +35,10 @@ RUN set -ex; \
     gunzip /usr/src/matomo/misc/GeoIPCity.dat.gz; \
     \
     chown -R www-data:www-data /usr/src/matomo; \
-    chmod -R 775 /usr/src/matomo/tmp; \
-    chown php-fpm:www-data /usr/src/matomo/config /usr/src/matomo/piwik.js; \
+    chmod 775 \
+        /usr/src/matomo/tmp \
+        /usr/src/matomo/config \
+        /usr/src/matomo/piwik.js; \
     \
     mv /usr/local/bin/actions.mk /usr/local/bin/php.mk; \
     \
