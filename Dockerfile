@@ -1,15 +1,9 @@
-ARG BASE_IMAGE_TAG
-
-FROM wodby/php:${BASE_IMAGE_TAG}
+FROM wodby/php:7.1-3.6.0
 
 ARG MATOMO_VER
 
 ENV APP_NAME="Matomo" \
     MATOMO_VER="${MATOMO_VER}" \
-    MATOMO_URL="http://builds.piwik.org/piwik-"${MATOMO_VER}".tar.gz" \
-    MATOMO_ASC_URL="http://builds.piwik.org/piwik-"${MATOMO_VER}".tar.gz.asc" \
-    GPG_KEY="814E346FA01A20DBB04B6807B5DBD5925590A237" \
-    GEOIP_DB_URL="http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz" \
     \
     PHP_ALWAYS_POPULATE_RAW_POST_DATA="1" \
     PHP_GEOIP_CUSTOM_DIR="/var/www/html/misc"
@@ -21,17 +15,16 @@ RUN set -ex; \
     apk add --no-cache -t .matomo-build-deps gnupg; \
     \
     # Download and verify matomo.
-    cd /tmp; \
-    curl -o matomo.tar.gz -Lskj "${MATOMO_URL}"; \
-    curl -o matomo.tar.gz.asc -Lskj "${MATOMO_ASC_URL}"; \
-    export GNUPGHOME="$(mktemp -d)"; \
-    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "${GPG_KEY}"; \
-    gpg --batch --verify matomo.tar.gz.asc matomo.tar.gz; \
+    curl -o /tmp/matomo.tar.gz -Lskj "http://builds.piwik.org/piwik-"${MATOMO_VER}".tar.gz"; \
+    curl -o /tmp/matomo.tar.gz.asc -Lskj "http://builds.piwik.org/piwik-"${MATOMO_VER}".tar.gz.asc"; \
+    GPG_KEYS=814E346FA01A20DBB04B6807B5DBD5925590A237 gpg-verify.sh /tmp/matomo.tar.gz.asc /tmp/matomo.tar.gz; \
+    \
     mkdir -p /usr/src/matomo; \
-    tar zxf matomo.tar.gz --strip-components=1 -C /usr/src/matomo; \
+    tar zxf /tmp/matomo.tar.gz --strip-components=1 -C /usr/src/matomo; \
     \
     # Download GeoIP database.
-    curl -fsSL -o /usr/src/matomo/misc/GeoIPCity.dat.gz "${GEOIP_DB_URL}"; \
+    curl -fsSL -o /usr/src/matomo/misc/GeoIPCity.dat.gz \
+        "http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz"; \
     gunzip /usr/src/matomo/misc/GeoIPCity.dat.gz; \
     \
     chown -R www-data:www-data /usr/src/matomo; \

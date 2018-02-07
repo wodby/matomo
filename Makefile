@@ -1,17 +1,10 @@
 -include env_make
 
 MATOMO_VER ?= 3.3.0
-PHP_VER ?= 7.1
-
 TAG ?= $(MATOMO_VER)
-BASE_IMAGE_TAG = $(PHP_VER)
 
 REPO = wodby/matomo
 NAME = matomo-$(MATOMO_VER)
-
-ifneq ($(BASE_IMAGE_STABILITY_TAG),)
-    BASE_IMAGE_TAG := $(BASE_IMAGE_TAG)-$(BASE_IMAGE_STABILITY_TAG)
-endif
 
 ifneq ($(STABILITY_TAG),)
     ifneq ($(TAG),latest)
@@ -24,9 +17,7 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) \
-		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
-		--build-arg MATOMO_VER=$(MATOMO_VER) ./
+	docker build -t $(REPO):$(TAG) --build-arg MATOMO_VER=$(MATOMO_VER) ./
 
 test:
 	cd ./test && IMAGE=$(REPO):$(TAG) ./run.sh
