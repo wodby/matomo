@@ -4,9 +4,12 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/matomo.svg)](https://hub.docker.com/r/wodby/matomo)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/matomo.svg)](https://hub.docker.com/r/wodby/matomo)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/matomo.svg)](https://microbadger.com/images/wodby/matomo)
-[![Wodby Slack](http://slack.wodby.com/badge.svg)](http://slack.wodby.com)
 
 ## Docker Images
+
+!!! For better reliability we release images with stability tags (`wodby/matomo:3.3-X.X.X`) which correspond to [git tags](https://github.com/wodby/matomo/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
+
+Overview:
 
 * All images are based on Alpine Linux
 * Base image: [wodby/php](https://github.com/wodby/php)
@@ -17,8 +20,6 @@ Supported tags and respective `Dockerfile` links:
 
 * `3`, `3.3`, `latest` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
 
-For better reliability we additionally release images with stability tags (`wodby/matomo:3.3-X.X.X`) which correspond to [git tags](https://github.com/wodby/matomo/releases). We **strongly recommend** using images only with stability tags. 
-
 ## Environment Variables
 
 | Variable                            | Default Value        | Description |
@@ -26,7 +27,7 @@ For better reliability we additionally release images with stability tags (`wodb
 | `PHP_ALWAYS_POPULATE_RAW_POST_DATA` | `1`                  |             |
 | `PHP_GEOIP_CUSTOM_DIR`              | `/var/www/html/misc` |             |
 
-See [wodby/php](https://github.com/wodby/php) to see all variables
+See [wodby/php](https://github.com/wodby/php) for all variables
 
 ## Orchestration Actions
 
@@ -38,7 +39,7 @@ commands:
     init
 ```
 
-See [wodby/php](https://github.com/wodby/php) to see all actions
+See [wodby/php](https://github.com/wodby/php) for all actions
 
 ## Deployment
 
