@@ -1,4 +1,6 @@
-FROM wodby/php:7.1-3.6.0
+ARG BASE_IMAGE_TAG
+
+FROM wodby/php:${BASE_IMAGE_TAG}
 
 ARG MATOMO_VER
 
@@ -27,7 +29,7 @@ RUN set -ex; \
         "http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz"; \
     gunzip /usr/src/matomo/misc/GeoIPCity.dat.gz; \
     \
-    chown -R www-data:www-data /usr/src/matomo; \
+    chown -R wodby:wodby /usr/src/matomo; \
     chmod 775 \
         /usr/src/matomo/tmp \
         /usr/src/matomo/config \
@@ -39,7 +41,7 @@ RUN set -ex; \
     rm -rf /tmp/*; \
     rm -rf /var/cache/apk/*
 
-USER www-data
+USER wodby
 
 COPY init /docker-entrypoint-init.d/
 COPY actions /usr/local/bin/
