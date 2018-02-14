@@ -6,6 +6,7 @@ services:
 env:
   global:
     - LATEST_TAG=3.3
+    - BASE_IMAGE_STABILITY_TAG=4.0.0
   matrix:
     - TAG=3.3 MATOMO_VER=3.3.0 EXTRA_TAG=3
 
