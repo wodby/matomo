@@ -16,7 +16,7 @@ services:
       WODBY_APP_NAME: matomo
     volumes:
       - codebase:/var/www/html
-      - ./tests.sh:/usr/local/bin/tests.sh
+      - ./tests:/usr/local/bin/tests
 
 volumes:
   codebase:
