@@ -29,7 +29,13 @@ RUN set -ex; \
         "http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz"; \
     gunzip /usr/src/matomo/misc/GeoIPCity.dat.gz; \
     \
+    echo "$(cat /etc/sudoers.d/wodby), /usr/local/bin/init" > /etc/sudoers.d/wodby; \
+    \
     chown -R wodby:wodby /usr/src/matomo; \
+    chown :www-data \
+        /usr/src/matomo/tmp \
+        /usr/src/matomo/config \
+        /usr/src/matomo/piwik.js; \
     chmod 775 \
         /usr/src/matomo/tmp \
         /usr/src/matomo/config \

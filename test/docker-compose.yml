@@ -13,6 +13,7 @@ services:
   matomo:
     image: $IMAGE
     environment:
+      DEBUG: 1
       WODBY_APP_NAME: matomo
     volumes:
       - codebase:/var/www/html
