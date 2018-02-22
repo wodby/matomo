@@ -3,4 +3,4 @@
 .PHONY: init
 
 init:
-	init.sh
+	init
