@@ -32,14 +32,20 @@ RUN set -ex; \
     echo "$(cat /etc/sudoers.d/wodby), /usr/local/bin/init" > /etc/sudoers.d/wodby; \
     \
     chown -R wodby:wodby /usr/src/matomo; \
+    \
     chown :www-data \
-        /usr/src/matomo/tmp \
         /usr/src/matomo/config \
         /usr/src/matomo/piwik.js; \
     chmod 775 \
-        /usr/src/matomo/tmp \
         /usr/src/matomo/config \
         /usr/src/matomo/piwik.js; \
+    \
+    chown -R :www-data \
+        /usr/src/matomo/tmp \
+        /usr/src/matomo/plugins; \
+    chmod -R 775 \
+        /usr/src/matomo/tmp \
+        /usr/src/matomo/plugins; \
     \
     mv /usr/local/bin/actions.mk /usr/local/bin/php.mk; \
     \
