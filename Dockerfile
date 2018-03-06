@@ -40,8 +40,12 @@ RUN set -ex; \
         /usr/src/matomo/config \
         /usr/src/matomo/piwik.js; \
     \
-    chown -R :www-data /usr/src/matomo/tmp; \
-    chmod -R 775 /usr/src/matomo/tmp; \
+    chown -R :www-data \
+        /usr/src/matomo/tmp \
+        /usr/src/matomo/plugins; \
+    chmod -R 775 \
+        /usr/src/matomo/tmp \
+        /usr/src/matomo/plugins; \
     \
     mv /usr/local/bin/actions.mk /usr/local/bin/php.mk; \
     \
