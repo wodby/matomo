@@ -34,9 +34,11 @@ RUN set -ex; \
     chown -R wodby:wodby /usr/src/matomo; \
     \
     chown :www-data \
+        /usr/src/matomo/misc/user \
         /usr/src/matomo/config \
         /usr/src/matomo/piwik.js; \
     chmod 775 \
+        /usr/src/matomo/misc/user \
         /usr/src/matomo/config \
         /usr/src/matomo/piwik.js; \
     \
