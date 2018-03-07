@@ -31,6 +31,17 @@ RUN set -ex; \
     \
     echo "$(cat /etc/sudoers.d/wodby), /usr/local/bin/init" > /etc/sudoers.d/wodby; \
     \
+    mkdir -p \
+        /usr/src/matomo/tmp/assets \
+        /usr/src/matomo/tmp/cache \
+        /usr/src/matomo/tmp/cache/tracker \
+        /usr/src/matomo/tmp/climulti \
+        /usr/src/matomo/tmp/latest \
+        /usr/src/matomo/tmp/logs \
+        /usr/src/matomo/tmp/sessions \
+        /usr/src/matomo/tmp/tcpdf \
+        /usr/src/matomo/tmp/templates_c; \
+    \
     chown -R wodby:wodby /usr/src/matomo; \
     \
     chown :www-data \

@@ -43,4 +43,4 @@ See [wodby/php](https://github.com/wodby/php) for all actions
 
 ## Deployment
 
-Deploy Matomo to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://cloud.wodby.com/stackhub).
+Deploy Matomo to your own server via [![Wodby](https://www.google.com/s2/favicons?domain=wodby.com) Wodby](https://cloud.wodby.com/stackhub/c8262c81-5852-4ccf-9c12-9ece43c8bfee/overview****).
