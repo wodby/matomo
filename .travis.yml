@@ -5,13 +5,12 @@ services:
 
 env:
   global:
-    - LATEST_TAG=3.3
-    - BASE_IMAGE_STABILITY_TAG=4.2.0
+    - LATEST_TAG=3.5
   matrix:
-    - TAG=3.3 MATOMO_VER=3.3.0 PHP_VER=7.1 EXTRA_TAG=3
+    - TAG=3.5 MATOMO_VER=3.5.0 EXTRA_TAG=3
 
 script:
   - travis_retry make && make test
 
 after_success:
-  - bash "${TRAVIS_BUILD_DIR}/travis_release"
+  - . "${TRAVIS_BUILD_DIR}/release.sh"

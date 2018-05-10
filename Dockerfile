@@ -19,7 +19,7 @@ RUN set -ex; \
     # Download and verify matomo.
     curl -o /tmp/matomo.tar.gz -Lskj "http://builds.piwik.org/piwik-"${MATOMO_VER}".tar.gz"; \
     curl -o /tmp/matomo.tar.gz.asc -Lskj "http://builds.piwik.org/piwik-"${MATOMO_VER}".tar.gz.asc"; \
-    GPG_KEYS=814E346FA01A20DBB04B6807B5DBD5925590A237 gpg-verify.sh /tmp/matomo.tar.gz.asc /tmp/matomo.tar.gz; \
+    GPG_KEYS=814E346FA01A20DBB04B6807B5DBD5925590A237 gpg_verify /tmp/matomo.tar.gz.asc /tmp/matomo.tar.gz; \
     \
     mkdir -p /usr/src/matomo; \
     tar zxf /tmp/matomo.tar.gz --strip-components=1 -C /usr/src/matomo; \
@@ -69,4 +69,4 @@ RUN set -ex; \
 USER wodby
 
 COPY init /docker-entrypoint-init.d/
-COPY actions /usr/local/bin/
+COPY bin /usr/local/bin/
