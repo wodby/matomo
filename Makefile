@@ -32,7 +32,7 @@ build:
 		./
 
 test:
-	cd ./test && IMAGE=$(REPO):$(TAG) ./run
+	cd ./test && IMAGE=$(REPO):$(TAG) ./run.sh
 
 push:
 	docker push $(REPO):$(TAG)
