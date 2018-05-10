@@ -5,9 +5,9 @@ services:
 
 env:
   global:
-    - LATEST_TAG=3.3
+    - LATEST_TAG=3.5
   matrix:
-    - TAG=3.3 MATOMO_VER=3.3.0 EXTRA_TAG=3
+    - TAG=3.5 MATOMO_VER=3.5.0 EXTRA_TAG=3
 
 script:
   - travis_retry make && make test
