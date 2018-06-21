@@ -21,6 +21,7 @@ else
     if [[ "${res}" == 0 ]]; then
         echo "Current version of ${APP_NAME} is outdated (${current_ver}), updating to ${latest_ver}..."
         rsync -a "${src_dir}/" "${APP_ROOT}/"
+        su-exec wodby php console core:update --yes
         echo "Complete! ${APP_NAME} has been successfully updated to ${latest_ver}"
     fi
 fi

@@ -8,7 +8,8 @@ ENV APP_NAME="Matomo" \
     MATOMO_VER="${MATOMO_VER}" \
     \
     PHP_ALWAYS_POPULATE_RAW_POST_DATA="1" \
-    PHP_GEOIP_CUSTOM_DIR="/var/www/html/misc"
+    PHP_GEOIP_CUSTOM_DIR="/var/www/html/misc" \
+    PHP_ERROR_REPORTING="E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED"
 
 USER root
 
