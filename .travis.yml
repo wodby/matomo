@@ -4,7 +4,7 @@ services:
   - docker
 
 env:
-  - MATOMO_VER=3.6.0 TAGS=3.6,3,latest
+  - MATOMO_VER=3.6.1 TAGS=3.6,3,latest
 
 script:
   - travis_retry make && make test
