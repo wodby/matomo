@@ -24,4 +24,10 @@ else
         su-exec wodby php console core:update --yes
         echo "Complete! ${APP_NAME} has been successfully updated to ${latest_ver}"
     fi
+
+    # Fix permission so a default user can customize the config.
+    if [[ -f "${APP_ROOT}/config/config.ini.php" ]]; then
+        chown wodby:www-data "${APP_ROOT}/config/config.ini.php";
+        chmod 664 "${APP_ROOT}/config/config.ini.php";
+    fi
 fi
