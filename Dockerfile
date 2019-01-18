@@ -24,6 +24,8 @@ RUN set -ex; \
     \
     mkdir -p /usr/src/matomo; \
     tar zxf /tmp/matomo.tar.gz --strip-components=1 -C /usr/src/matomo; \
+    wget -P /usr/src/matomo/misc http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz; \
+    gunzip /usr/src/matomo/GeoLite2-City.mmdb.gz; \
     \
     echo "$(cat /etc/sudoers.d/wodby), /usr/local/bin/init" > /etc/sudoers.d/wodby; \
     \
