@@ -5,7 +5,7 @@ services:
 
 env:
   matrix:
-    - MATOMO_VER=3.8.0 TAGS=3.8,3,latest
+    - MATOMO_VER=3.8.1 TAGS=3.8,3,latest
 
 script:
   - travis_retry make && make test
