@@ -4,7 +4,7 @@ services:
 - docker
 
 env:
-- BASE_IMAGE_STABILITY_TAG=4.12.12
+- BASE_IMAGE_STABILITY_TAG=4.12.13
 - MATOMO_VER=3.12.0 TAGS=3.12,3,latest
 
 script:
