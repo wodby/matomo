@@ -5,7 +5,7 @@ MATOMO_MINOR_VER ?= $(shell echo "${MATOMO_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 TAG ?= $(MATOMO_MINOR_VER)
 
-PHP_VER ?= 7.1
+PHP_VER ?= 7.2
 BASE_IMAGE_TAG = $(PHP_VER)
 
 REPO = wodby/matomo
