@@ -5,7 +5,7 @@ services:
 
 env:
 - BASE_IMAGE_STABILITY_TAG=4.13.2
-- MATOMO_VER=3.13.0 TAGS=3.13,3,latest
+- MATOMO_VER=3.13.1 TAGS=3.13,3,latest
 
 script:
 - travis_retry make && make test
