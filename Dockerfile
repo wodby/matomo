@@ -13,7 +13,7 @@ ENV APP_NAME="Matomo" \
 
 USER root
 
-COPY GeoLite2-City.mmdb.gz /tmp
+COPY geolite /tmp/geolite
 
 RUN set -ex; \
     \
@@ -26,8 +26,9 @@ RUN set -ex; \
     \
     mkdir -p /usr/src/matomo; \
     tar zxf /tmp/matomo.tar.gz --strip-components=1 -C /usr/src/matomo; \
-    mv /tmp/GeoLite2-City.mmdb.gz /usr/src/matomo/misc; \
-    gunzip /usr/src/matomo/misc/GeoLite2-City.mmdb.gz; \
+    mv /tmp/geolite /usr/src/matomo/misc; \
+    gunzip /usr/src/matomo/misc/geolite/GeoLite2-City.mmdb.gz; \
+    mv /usr/src/matomo/misc/geolite/GeoLite2-City.mmdb /usr/src/matomo/misc/; \
     \
     echo "$(cat /etc/sudoers.d/wodby), /usr/local/bin/init" > /etc/sudoers.d/wodby; \
     \
