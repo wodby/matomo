@@ -5,7 +5,7 @@ services:
 
 env:
   global:
-  - BASE_IMAGE_STABILITY_TAG=4.14.6
+  - BASE_IMAGE_STABILITY_TAG=4.14.7
   - MATOMO_VER=3.13.4 TAGS=3.13,3,latest
 
 script:
