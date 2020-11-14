@@ -1,0 +1,38 @@
+name: Build
+description: Build matomo image
+inputs:
+  version:
+    description: version
+    required: true
+  php_ver:
+    description: php version
+    required: true
+  tags:
+    description: image tags
+    required: true
+  username:
+    description: docker username
+    required: true
+  password:
+    description: docker password
+    required: true
+  base_image_stability_tag:
+    description: base image stability tag
+    required: true
+runs:
+  using: "composite"
+  steps:
+  - name: Build image
+    env:
+      MATOMO_VER: ${{ inputs.version }}
+      PHP_VER: ${{ inputs.php_ver }}
+      DOCKER_USERNAME: ${{ inputs.username }}
+      DOCKER_PASSWORD: ${{ inputs.password }}
+      TAGS: ${{ inputs.tags }}
+      BASE_IMAGE_STABILITY_TAG: ${{ inputs.base_image_stability_tag }}
+    run: |
+      set -e
+      make
+      make test
+      . $GITHUB_ACTION_PATH/release.sh
+    shell: bash

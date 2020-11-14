@@ -1,6 +1,6 @@
 # Matomo Docker Container Image
 
-[![Build Status](https://travis-ci.org/wodby/matomo.svg?branch=master)](https://travis-ci.org/wodby/matomo)
+[![Build Status](https://github.com/wodby/matomo/workflows/Build%20docker%20image/badge.svg)](https://github.com/wodby/matomo/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/matomo.svg)](https://hub.docker.com/r/wodby/matomo)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/matomo.svg)](https://hub.docker.com/r/wodby/matomo)
 [![Docker Layers](https://images.microbadger.com/badges/image/wodby/matomo.svg)](https://microbadger.com/images/wodby/matomo)
@@ -11,10 +11,10 @@
 
 Overview:
 
-* All images are based on Alpine Linux
-* Base image: [wodby/php](https://github.com/wodby/php)
-* [TravisCI builds](https://travis-ci.org/wodby/matomo) 
-* [Docker Hub](https://hub.docker.com/r/wodby/matomo)
+- All images based on Alpine Linux
+- Base image: [wodby/php](https://github.com/wodby/php)
+- [GitHub actions builds](https://github.com/wodby/matomo/actions) 
+- [Docker Hub](https://hub.docker.com/r/wodby/matomo)
 
 Supported tags and respective `Dockerfile` links:
 
