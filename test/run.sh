@@ -7,7 +7,7 @@ if [[ -n "${DEBUG}" ]]; then
 fi
 
 docker-compose up -d
-docker-compose exec nginx make check-ready -f /usr/local/bin/actions.mk
-docker-compose exec matomo make init -f /usr/local/bin/actions.mk
-docker-compose exec matomo tests.sh
+docker-compose exec -T nginx make check-ready -f /usr/local/bin/actions.mk
+docker-compose exec -T matomo make init -f /usr/local/bin/actions.mk
+docker-compose exec -T matomo tests.sh
 docker-compose down
