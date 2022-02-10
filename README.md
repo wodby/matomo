@@ -21,10 +21,15 @@ Supported tags and respective `Dockerfile` links:
 * `4.7`, `4`, `latest` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
 * `3.14`, `3` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
 
+| Matomo version | PHP version |
+|----------------|-------------|
+| `4`            | `8.1`       |
+| `3`            | `7.4`       |
+
 ## Environment Variables
 
 | Variable                            | Default Value        | Description |
-| ----------------------------------- | -------------------- | ----------- |
+|-------------------------------------|----------------------|-------------|
 | `PHP_ALWAYS_POPULATE_RAW_POST_DATA` | `1`                  |             |
 | `PHP_GEOIP_CUSTOM_DIR`              | `/var/www/html/misc` |             |
 

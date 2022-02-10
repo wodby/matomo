@@ -9,7 +9,7 @@ on:
     - '*'
 
 env:
-  BASE_IMAGE_STABILITY_TAG: 4.19.1
+  BASE_IMAGE_STABILITY_TAG: 4.27.6
 
 jobs:
   matomo-4:
@@ -19,7 +19,7 @@ jobs:
     - uses: ./.github/actions
       with:
         version: '4.7.1'
-        php_ver: 7.2
+        php_ver: 8.1
         tags: 4.7,4,latest
         base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -31,7 +31,7 @@ jobs:
     - uses: ./.github/actions
       with:
         version: 3.14.1
-        php_ver: 7.2
+        php_ver: 7.4
         tags: 3.14,3
         base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
         username: ${{ secrets.DOCKER_USERNAME }}
