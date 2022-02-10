@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/wodby/matomo/workflows/Build%20docker%20image/badge.svg)](https://github.com/wodby/matomo/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/matomo.svg)](https://hub.docker.com/r/wodby/matomo)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/matomo.svg)](https://hub.docker.com/r/wodby/matomo)
-[![Docker Layers](https://images.microbadger.com/badges/image/wodby/matomo.svg)](https://microbadger.com/images/wodby/matomo)
 
 ## Docker Images
 
@@ -19,12 +18,6 @@ Overview:
 Supported tags and respective `Dockerfile` links:
 
 * `4.7`, `4`, `latest` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
-* `3.14`, `3` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
-
-| Matomo version | PHP version |
-|----------------|-------------|
-| `4`            | `8.1`       |
-| `3`            | `7.4`       |
 
 ## Environment Variables
 

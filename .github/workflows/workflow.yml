@@ -10,6 +10,8 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 4.27.6
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
   matomo-4:
@@ -21,18 +23,3 @@ jobs:
         version: '4.7.1'
         php_ver: 8.1
         tags: 4.7,4,latest
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-  matomo-3:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ./.github/actions
-      with:
-        version: 3.14.1
-        php_ver: 7.4
-        tags: 3.14,3
-        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
