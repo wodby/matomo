@@ -11,6 +11,7 @@ src_dir="/usr/src/matomo"
 if [[ ! -f "${APP_ROOT}/piwik.php" ]]; then
     echo >&2 "${APP_NAME} not found in ${APP_ROOT} - copying now..."
     rsync -a "${src_dir}/" "${APP_ROOT}/"
+    chown www-data:www-data "${APP_ROOT}/matomo.js"
     echo >&2 "Complete! ${APP_NAME} has been successfully copied to ${APP_ROOT}"
 else
     latest_ver=$(php "${src_dir}/console"  -V | grep -oE '[0-9]+(\.[0-9]+){2}')
@@ -24,6 +25,8 @@ else
         su-exec wodby php console core:update --yes
         echo "Complete! ${APP_NAME} has been successfully updated to ${latest_ver}"
     fi
+
+    chown www-data:www-data "${APP_ROOT}/matomo.js"
 
     # Fix permission so a default user can customize the config.
     if [[ -f "${APP_ROOT}/config/config.ini.php" ]]; then

@@ -29,6 +29,7 @@ RUN set -ex; \
     mv /tmp/geolite /usr/src/matomo/misc; \
     gunzip /usr/src/matomo/misc/geolite/GeoLite2-City.mmdb.gz; \
     mv /usr/src/matomo/misc/geolite/GeoLite2-City.mmdb /usr/src/matomo/misc/; \
+    rm -rf /usr/src/matomo/misc/geolite; \
     \
     echo "$(cat /etc/sudoers.d/wodby), /usr/local/bin/init" > /etc/sudoers.d/wodby; \
     \
