@@ -22,7 +22,7 @@ RUN set -ex; \
     # Download and verify matomo.
     curl -o /tmp/matomo.tar.gz -Lskj "http://builds.piwik.org/piwik-"${MATOMO_VER}".tar.gz"; \
     curl -o /tmp/matomo.tar.gz.asc -Lskj "http://builds.piwik.org/piwik-"${MATOMO_VER}".tar.gz.asc"; \
-    GPG_KEYS=814E346FA01A20DBB04B6807B5DBD5925590A237 gpg_verify /tmp/matomo.tar.gz.asc /tmp/matomo.tar.gz; \
+    GPG_KEYS=F529A27008477483777FC23D63BB30D0E5D2C749 gpg_verify /tmp/matomo.tar.gz.asc /tmp/matomo.tar.gz; \
     \
     mkdir -p /usr/src/matomo; \
     tar zxf /tmp/matomo.tar.gz --strip-components=1 -C /usr/src/matomo; \
