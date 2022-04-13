@@ -7,7 +7,7 @@ TAG ?= $(MATOMO_MINOR_VER)
 
 PHP_VER ?= 8.1
 ALPINE_VER ?= 3.15
-BASE_IMAGE_TAG = $(PHP_VER)
+BASE_IMAGE_TAG = $(PHP_VER)-alpine$(ALPINE_VER)
 
 REPO = wodby/matomo
 NAME = matomo-$(MATOMO_MINOR_VER)
@@ -15,8 +15,6 @@ NAME = matomo-$(MATOMO_MINOR_VER)
 ifneq ($(BASE_IMAGE_STABILITY_TAG),)
     BASE_IMAGE_TAG := $(BASE_IMAGE_TAG)-$(BASE_IMAGE_STABILITY_TAG)
 endif
-
-BASE_IMAGE_TAG := $(BASE_IMAGE_TAG)-alpine$(ALPINE_VER)
 
 ifneq ($(STABILITY_TAG),)
     ifneq ($(TAG),latest)
