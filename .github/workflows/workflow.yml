@@ -20,9 +20,9 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions
       with:
-        version: '4.8.0'
+        version: '4.9.0'
         php_ver: 8.1
-        tags: 4.8,4,latest
+        tags: 4.9,4,latest
         alpine_ver: 3.15
   matomo-4-alpine313:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions
       with:
-        version: '4.8.0'
+        version: '4.9.0'
         php_ver: 8.1
-        tags: 4.8-alpine3.13,4-alpine3.13,alpine3.13
+        tags: 4.9-alpine3.13,4-alpine3.13,alpine3.13
         alpine_ver: 3.13
