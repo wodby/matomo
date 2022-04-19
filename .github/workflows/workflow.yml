@@ -23,4 +23,3 @@ jobs:
         version: '4.9.0'
         php_ver: 8.1
         tags: 4.9,4,latest
-3
