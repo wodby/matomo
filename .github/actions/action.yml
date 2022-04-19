@@ -10,9 +10,6 @@ inputs:
   tags:
     description: image tags
     required: true
-  alpine_ver:
-    description: alpine version
-    required: true
 runs:
   using: "composite"
   steps:
@@ -21,7 +18,6 @@ runs:
       MATOMO_VER: ${{ inputs.version }}
       PHP_VER: ${{ inputs.php_ver }}
       TAGS: ${{ inputs.tags }}
-      ALPINE_VER: ${{ inputs.alpine_ver }}
     run: |
       set -e
       make

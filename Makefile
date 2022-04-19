@@ -7,7 +7,7 @@ TAG ?= $(MATOMO_MINOR_VER)
 
 PHP_VER ?= 8.1
 ALPINE_VER ?= 3.15
-BASE_IMAGE_TAG = $(PHP_VER)-alpine$(ALPINE_VER)
+BASE_IMAGE_TAG = $(PHP_VER)
 
 REPO = wodby/matomo
 NAME = matomo-$(MATOMO_MINOR_VER)
