@@ -20,6 +20,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions
       with:
-        version: '4.16.0'
+        version: '5.0.1'
         php_ver: 8.1
-        tags: 4.16,4,latest
+        tags: 5.0,5,latest

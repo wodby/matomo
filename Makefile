@@ -1,12 +1,11 @@
 -include env_make
 
-MATOMO_VER ?= 4.16.0
+MATOMO_VER ?= 5.0.1
 MATOMO_MINOR_VER ?= $(shell echo "${MATOMO_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 TAG ?= $(MATOMO_MINOR_VER)
 
 PHP_VER ?= 8.1
-ALPINE_VER ?= 3.15
 BASE_IMAGE_TAG = $(PHP_VER)
 
 REPO = wodby/matomo
