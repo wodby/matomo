@@ -21,8 +21,12 @@ else
 
     if [[ "${res}" == 0 ]]; then
         echo "Current version of ${APP_NAME} is outdated (${current_ver}), updating to ${latest_ver}..."
-        rsync -a "${src_dir}/" "${APP_ROOT}/" --delete
-        su-exec wodby php console diagnostics:unexpected-files --delete -n
+        rsync -a "${src_dir}/" "${APP_ROOT}/"
+        if [[ "${latest_ver}" =~ "5." && "${current_ver}" =~ "4." ]]; then
+            rm "${APP_ROOT}/plugins/CoreConsole/Commands/GenerateAngularComponent.php"
+            rm "${APP_ROOT}/plugins/CoreConsole/Commands/GenerateAngularDirective.php"
+            su-exec wodby php console diagnostics:unexpected-files --delete -n
+        fi
         su-exec wodby php console core:update --yes
         echo "Complete! ${APP_NAME} has been successfully updated to ${latest_ver}"
     fi
