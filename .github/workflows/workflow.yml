@@ -21,5 +21,5 @@ jobs:
     - uses: ./.github/actions
       with:
         version: '5.0.3'
-        php_ver: 8.1
+        php_ver: 8.2
         tags: 5.0,5,latest
