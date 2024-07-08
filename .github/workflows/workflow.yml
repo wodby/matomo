@@ -14,7 +14,7 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  matomo-4:
+  matomo-5:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
