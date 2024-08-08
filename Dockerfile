@@ -20,8 +20,8 @@ RUN set -ex; \
     apk add --no-cache -t .matomo-build-deps gnupg; \
     \
     # Download and verify matomo.
-    curl -o /tmp/matomo.tar.gz -Lskj "https://builds.matomo.org/matomo-"${MATOMO_VER}".tar.gz"; \
-    curl -o /tmp/matomo.tar.gz.asc -Lskj "https://builds.matomo.org/matomo-"${MATOMO_VER}".tar.gz.asc"; \
+    curl -o /tmp/matomo.tar.gz -Ls "https://builds.matomo.org/matomo-"${MATOMO_VER}".tar.gz"; \
+    curl -o /tmp/matomo.tar.gz.asc -Ls "https://builds.matomo.org/matomo-"${MATOMO_VER}".tar.gz.asc"; \
     GPG_KEYS=F529A27008477483777FC23D63BB30D0E5D2C749 gpg_verify /tmp/matomo.tar.gz.asc /tmp/matomo.tar.gz; \
     \
     mkdir -p /usr/src/matomo; \
