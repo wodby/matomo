@@ -1,6 +1,6 @@
 -include env_make
 
-MATOMO_VER ?= 5.5.1
+MATOMO_VER ?= 5.5.2
 MATOMO_MINOR_VER ?= $(shell echo "${MATOMO_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 TAG ?= $(MATOMO_MINOR_VER)
