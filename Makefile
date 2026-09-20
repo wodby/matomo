@@ -1,5 +1,9 @@
 -include env_make
 
+# Accept legacy build arguments during the image revision transition.
+BASE_IMAGE_REVISION ?= $(BASE_IMAGE_STABILITY_TAG)
+IMAGE_REVISION ?= $(STABILITY_TAG)
+
 MATOMO_VER ?= 5.13.0
 MATOMO_MINOR_VER ?= $(shell echo "${MATOMO_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
@@ -11,13 +15,15 @@ BASE_IMAGE_TAG = $(PHP_VER)
 REPO = wodby/matomo
 NAME = matomo-$(MATOMO_MINOR_VER)
 
-ifneq ($(BASE_IMAGE_STABILITY_TAG),)
-    BASE_IMAGE_TAG := $(BASE_IMAGE_TAG)-$(BASE_IMAGE_STABILITY_TAG)
+ifneq ($(BASE_IMAGE_REVISION),)
+    BASE_IMAGE_TAG := $(BASE_IMAGE_TAG)-$(BASE_IMAGE_REVISION)
 endif
 
-ifneq ($(STABILITY_TAG),)
+ifneq ($(IMAGE_REVISION),)
     ifneq ($(TAG),latest)
-        override TAG := $(TAG)-$(STABILITY_TAG)
+        override TAG := $(TAG)-$(IMAGE_REVISION)
+    else
+        override TAG := $(IMAGE_REVISION)
     endif
 endif
 
