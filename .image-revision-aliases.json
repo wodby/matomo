@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "image": "wodby/matomo",
+  "versions": [
+    {
+      "version": {
+        "job": "matomo-5"
+      },
+      "variants": [
+        {
+          "short": [
+            "{minor}",
+            "{major}"
+          ],
+          "full": "{version}"
+        }
+      ]
+    }
+  ]
+}
