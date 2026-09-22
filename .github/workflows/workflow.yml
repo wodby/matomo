@@ -22,9 +22,9 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
-        version: '5.13.0'
+        version: '5.14.0'
         php_ver: 8.2
-        tags: 5.13,5,latest
+        tags: 5.14,5,latest
 
   image-revision-aliases:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/r')

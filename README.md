@@ -23,7 +23,7 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-* `5.13`, `5`, `latest` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
+* `5.14`, `5`, `latest` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
 
 ## Environment Variables
 
