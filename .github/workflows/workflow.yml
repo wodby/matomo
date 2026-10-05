@@ -22,7 +22,7 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
-        version: '5.14.0'
+        version: '5.14.1'
         php_ver: 8.2
         tags: 5.14,5,latest
 
