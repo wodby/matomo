@@ -18,6 +18,9 @@ USER root
 
 COPY geolite /tmp/geolite
 
+# Refresh inherited security fixes when rebuilding this image.
+RUN apk upgrade --no-cache
+
 RUN set -ex; \
     \
     apk add --no-cache -t .matomo-build-deps gnupg; \
