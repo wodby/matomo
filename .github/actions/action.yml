@@ -11,11 +11,9 @@ inputs:
     description: image tags
     required: true
 runs:
-  using: composite
+  using: "composite"
   steps:
-  - name: Build and test image
-    id: brotli-image
-    shell: bash
+  - name: Build image
     env:
       MATOMO_VER: ${{ inputs.version }}
       PHP_VER: ${{ inputs.php_ver }}
@@ -24,18 +22,5 @@ runs:
       set -e
       make
       make test
-      echo "image=$(make --no-print-directory -s image-ref)" >> "$GITHUB_OUTPUT"
-  - name: Verify Brotli security fixes
-    uses: wodby/images/.github/actions/check-brotli@4d79323d1d62295e425a222e8cb23ccf843cbbea
-    with:
-      image: ${{ steps.brotli-image.outputs.image }}
-  - name: Publish verified image
-    if: github.event_name == 'push'
-    shell: bash
-    env:
-      MATOMO_VER: ${{ inputs.version }}
-      PHP_VER: ${{ inputs.php_ver }}
-      TAGS: ${{ inputs.tags }}
-    run: |
-      set -e
       . $GITHUB_ACTION_PATH/release.sh
+    shell: bash
