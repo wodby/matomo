@@ -24,6 +24,48 @@ Overview:
 Supported tags and respective `Dockerfile` links:
 
 * `5.14`, `5`, `latest` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile)
+* `5.14-apache`, `5-apache` [_(Dockerfile)_](https://github.com/wodby/matomo/tree/master/Dockerfile), see
+  [Apache variant](#apache-variant)
+
+## Apache variant
+
+The `-apache` images serve Matomo from the image itself: Matomo's verified release in `/var/www/html` on the Apache
+variant of [wodby/php](https://github.com/wodby/php) 8.4, where Apache passes PHP to PHP-FPM in the same container.
+They are built for `linux/amd64` and `linux/arm64`. The other tags are unchanged: PHP-FPM with Matomo in
+`/usr/src/matomo`, copied to a shared codebase volume for a separate web server.
+
+On every start the image writes `config/common.config.ini.php`, a layer Matomo reads but never writes, from:
+
+| Variable                  | Default             | Description                                                                 |
+|---------------------------|---------------------|-----------------------------------------------------------------------------|
+| `DB_HOST`                 | `localhost`         |                                                                             |
+| `DB_PORT`                 | `3306`              |                                                                             |
+| `DB_NAME`                 | `matomo`            |                                                                             |
+| `DB_USERNAME`             |                     |                                                                             |
+| `DB_PASSWORD`             |                     |                                                                             |
+| `MATOMO_DB_TABLES_PREFIX` | `matomo_`           |                                                                             |
+| `MATOMO_SALT`             |                     | Required. A long random string that never changes                          |
+| `MATOMO_URL`              | `WODBY_PRIMARY_URL` | Matomo's address; HTTPS here makes Matomo assume HTTPS behind the proxy     |
+| `WODBY_HOSTS`             |                     | JSON array of trusted hosts                                                 |
+| `MATOMO_TRUSTED_HOSTS`    |                     | More trusted hosts, separated by commas                                     |
+
+It also turns off the web installer, Matomo's own updater and archiving triggered by viewing reports, and takes the
+client address from `X-Forwarded-For`.
+
+The files directory, `/mnt/files`, holds `config/config.ini.php` (the settings Matomo writes), custom logos
+(`misc-user`, linked from `misc/user`) and plugins installed from the Marketplace (`plugins`, loaded through
+`MATOMO_PLUGIN_DIRS`). Share it between all containers of an installation.
+
+| Command          | What it does                                                                                       |
+|------------------|----------------------------------------------------------------------------------------------------|
+| _(default)_      | Serves Matomo on port 80                                                                           |
+| `matomo-update`  | Installs Matomo into an empty database, or runs `core:update` on an installed one                 |
+| `matomo-archive` | Runs `core:archive` with `--url` set to `MATOMO_URL`; run it every hour                            |
+
+`matomo-update` installs Matomo the way the web installer does, with the `wodby:install` command of the bundled
+WodbyInstall plugin. The superuser comes from `MATOMO_ADMIN_USERNAME` (default `admin`), `MATOMO_ADMIN_PASSWORD` and
+`MATOMO_ADMIN_EMAIL`, and the first website from `MATOMO_SITE_URL`, named `MATOMO_SITE_NAME`. It refuses to install
+without a password and email, or into a database that already has tables.
 
 ## Environment Variables
 

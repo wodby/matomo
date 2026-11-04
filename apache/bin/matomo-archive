@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Archives Matomo's reports and runs its scheduled tasks, such as email
+# reports. Nothing runs until Matomo is installed.
+
+set -eo pipefail
+
+cd "${APP_ROOT}"
+
+if ! matomo-installed; then
+    echo "Matomo is not installed yet."
+    exit 0
+fi
+
+exec php console core:archive --url="${MATOMO_URL:-${WODBY_PRIMARY_URL:-http://localhost}}" --no-interaction
