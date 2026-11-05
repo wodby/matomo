@@ -10,9 +10,9 @@ on:
     - '!*-r[0-9]*'
 
 env:
-  BASE_IMAGE_REVISION: r12
+  BASE_IMAGE_REVISION: r13
   # The revision of the wodby/php Apache variant the apache image is built on.
-  APACHE_BASE_IMAGE_REVISION: r12
+  APACHE_BASE_IMAGE_REVISION: r13
 
 jobs:
   matomo-5:
