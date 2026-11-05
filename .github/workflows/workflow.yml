@@ -11,6 +11,8 @@ on:
 
 env:
   BASE_IMAGE_REVISION: r12
+  # The revision of the wodby/php Apache variant the apache image is built on.
+  APACHE_BASE_IMAGE_REVISION: r12
 
 jobs:
   matomo-5:
@@ -26,9 +28,26 @@ jobs:
         php_ver: 8.2
         tags: 5.14,5,latest
 
+  # Wodby 2: Matomo served by Apache from the image, for amd64 and arm64.
+  matomo-5-apache:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: docker/setup-qemu-action@v3
+    - uses: docker/setup-buildx-action@v3
+    - uses: ./.github/actions
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      with:
+        version: '5.14.2'
+        php_ver: 8.2
+        variant: apache
+        tags: 5.14-apache,5-apache
+
   image-revision-aliases:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/r')
-    needs: [ matomo-5 ]
+    needs: [ matomo-5, matomo-5-apache ]
     runs-on: ubuntu-latest
     permissions:
       contents: write

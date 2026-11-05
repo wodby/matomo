@@ -13,6 +13,13 @@
             "{major}"
           ],
           "full": "{version}"
+        },
+        {
+          "short": [
+            "{minor}-apache",
+            "{major}-apache"
+          ],
+          "full": "{version}-apache"
         }
       ]
     }

@@ -17,6 +17,11 @@ if [[ "${GITHUB_REF}" == refs/heads/master || "${GITHUB_REF}" == refs/tags/* ]];
     IFS=',' read -ra tags <<< "${TAGS}"
 
     for tag in "${tags[@]}"; do
-        make release TAG="${tag}";
+        if [[ -n "${VARIANT}" ]]; then
+            # Variants are published for both architectures.
+            make buildx-push TAG="${tag}";
+        else
+            make release TAG="${tag}";
+        fi
     done
 fi

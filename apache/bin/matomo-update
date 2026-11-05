@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Installs Matomo into an empty database, or updates the database of an
+# installed Matomo to the version in the image. Matomo's web installer is never
+# used, so no one else can claim a new site before its superuser.
+
+set -eo pipefail
+
+if [[ -n "${DEBUG}" ]]; then
+    set -x
+fi
+
+cd "${APP_ROOT}"
+
+if matomo-installed; then
+    exec php console core:update --yes --no-interaction
+fi
+
+if [[ -f config/config.ini.php ]]; then
+    echo "An earlier installation of Matomo didn't finish. Empty the database and delete config/config.ini.php in the files directory, then deploy again." >&2
+    exit 1
+fi
+
+exec php console wodby:install --no-interaction

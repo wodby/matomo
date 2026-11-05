@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Exits 0 when Matomo is installed: its settings file exists and no
+# installation is in progress, as Matomo itself checks.
+
+config="${APP_ROOT}/config/config.ini.php"
+
+[[ -f "${config}" ]] && ! grep -q '^installation_in_progress' "${config}"

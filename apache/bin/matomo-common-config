@@ -1,0 +1,70 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Prints Matomo's config/common.config.ini.php from the environment: the
+ * database, the salt, the trusted hosts and the settings of a containerized
+ * installation. Matomo reads this file between global.ini.php and its own
+ * config.ini.php and never writes it, so these settings follow the
+ * environment on every start and are not copied into config.ini.php.
+ */
+
+require getenv('APP_ROOT') . '/vendor/autoload.php';
+
+$env = static function (string $name, ?string $default = null): ?string {
+    $value = getenv($name);
+    return $value === false || $value === '' ? $default : $value;
+};
+
+$salt = $env('MATOMO_SALT');
+if ($salt === null) {
+    fwrite(STDERR, "Set MATOMO_SALT, a long random string that stays the same for the life of the installation.\n");
+    exit(1);
+}
+
+$config = [
+    'database' => [
+        'host' => $env('DB_HOST', 'localhost'),
+        'port' => $env('DB_PORT', '3306'),
+        'username' => $env('DB_USERNAME', ''),
+        'password' => $env('DB_PASSWORD', ''),
+        'dbname' => $env('DB_NAME', 'matomo'),
+        'tables_prefix' => $env('MATOMO_DB_TABLES_PREFIX', 'matomo_'),
+        'charset' => 'utf8mb4',
+    ],
+    'General' => [
+        'salt' => $salt,
+        // Matomo is installed by matomo-update, never from the web.
+        'enable_installer' => 0,
+        // The code is part of the image.
+        'enable_auto_update' => 0,
+        // Reports are archived by the matomo-archive cron job, not by visitors.
+        'enable_browser_archiving_triggering' => 0,
+        'browser_archiving_disabled_enforce' => 1,
+        'always_load_commands_from_plugin' => 'WodbyInstall',
+        // The address of the client is the last in X-Forwarded-For, added by
+        // the proxy in front of the container.
+        'proxy_client_headers' => ['HTTP_X_FORWARDED_FOR'],
+    ],
+];
+
+// TLS ends at the proxy in front of the container.
+$url = $env('MATOMO_URL', $env('WODBY_PRIMARY_URL', ''));
+if (str_starts_with($url, 'https://')) {
+    $config['General']['assume_secure_protocol'] = 1;
+}
+
+// The hosts of the app's routes on Wodby, and any others in
+// MATOMO_TRUSTED_HOSTS, separated by commas.
+$hosts = json_decode($env('WODBY_HOSTS', '[]'), true) ?: [];
+foreach (explode(',', $env('MATOMO_TRUSTED_HOSTS', '')) as $host) {
+    $hosts[] = trim($host);
+}
+$hosts = array_values(array_unique(array_filter($hosts)));
+if ($hosts !== []) {
+    $config['General']['trusted_hosts'] = $hosts;
+}
+
+echo (new \Matomo\Ini\IniWriter())->writeToString(
+    $config,
+    "; Written from the environment by matomo-common-config on every start. Do not edit.\n"
+);
