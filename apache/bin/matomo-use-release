@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+# Replaces the Matomo code in the image with another verified release of the
+# same major version, for builds that keep Matomo's version in the app
+# repository. Wodby's additions stay: the WodbyInstall plugin, the GeoLite
+# database, Matomo's .htaccess files and the links to the files directory.
+#
+# Runs as root during an image build and needs gpg; the build installs gnupg
+# for it and removes it afterwards.
+
+set -eo pipefail
+
+if [[ -n "${DEBUG}" ]]; then
+    set -x
+fi
+
+version="${1}"
+major="${MATOMO_VER%%.*}"
+
+# Matomo's releases look like 5.14.2, 5.0.0-b1 or 5.0.0-rc2.
+if [[ ! "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-(b|rc)[0-9]+)?$ ]]; then
+    echo "Set a Matomo release version such as ${MATOMO_VER}, not \"${version}\"" >&2
+    exit 1
+fi
+if [[ "${version}" == "${MATOMO_VER}" ]]; then
+    echo "The image already has Matomo ${version}"
+    exit 0
+fi
+if [[ "${version%%.*}" != "${major}" ]]; then
+    echo "Matomo ${version} is not a ${major}.x release. This image runs Matomo ${major}: pin a ${major}.x version, or select Matomo ${version%%.*} for the service" >&2
+    exit 1
+fi
+
+tmp=$(mktemp -d)
+release="${tmp}/matomo"
+
+echo "Downloading Matomo ${version}"
+curl -fsSL -o "${tmp}/matomo.tar.gz" "https://builds.matomo.org/matomo-${version}.tar.gz"
+curl -fsSL -o "${tmp}/matomo.tar.gz.asc" "https://builds.matomo.org/matomo-${version}.tar.gz.asc"
+GPG_KEYS=F529A27008477483777FC23D63BB30D0E5D2C749 gpg_verify "${tmp}/matomo.tar.gz.asc" "${tmp}/matomo.tar.gz"
+mkdir "${release}"
+tar zxf "${tmp}/matomo.tar.gz" --strip-components=1 -C "${release}"
+
+# The parts of the image that don't come from Matomo's release.
+cp -a "${APP_ROOT}/misc/GeoLite2-City.mmdb" "${release}/misc/"
+cp -a "${APP_ROOT}/plugins/WodbyInstall" "${release}/plugins/"
+
+mkdir -p \
+    "${release}/tmp/assets" \
+    "${release}/tmp/cache/tracker" \
+    "${release}/tmp/climulti" \
+    "${release}/tmp/latest" \
+    "${release}/tmp/logs" \
+    "${release}/tmp/sessions" \
+    "${release}/tmp/tcpdf" \
+    "${release}/tmp/templates_c"
+
+find "${APP_ROOT}" -mindepth 1 -delete
+cp -a "${release}/." "${APP_ROOT}/"
+rm -rf "${tmp}"
+
+cd "${APP_ROOT}"
+# Matomo's .htaccess files for its code directories, as in the image.
+php console core:create-security-files
+# Links to the files directory: the settings Matomo writes, custom logos and
+# Marketplace plugins.
+ln -s "${FILES_DIR}/config/config.ini.php" config/config.ini.php
+rm -rf misc/user
+ln -s "${FILES_DIR}/misc-user" misc/user
+ln -s "${FILES_DIR}/plugins" marketplace-plugins
+
+chown -hR wodby:wodby "${APP_ROOT}"
+chmod 775 config piwik.js
+chmod -R 775 tmp plugins
+
+echo "Matomo ${version} replaces ${MATOMO_VER} in the image"

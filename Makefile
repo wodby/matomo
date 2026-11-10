@@ -71,6 +71,7 @@ build:
 test:
 ifeq ($(VARIANT),apache)
 	cd ./test/apache && IMAGE=$(REPO):$(TAG) NAME=$(NAME)-apache ./run.sh
+	cd ./test/apache && IMAGE=$(REPO):$(TAG) NAME=$(NAME)-apache ./release.sh
 else
 	cd ./test && IMAGE=$(REPO):$(TAG) ./run.sh
 endif

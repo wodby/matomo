@@ -67,6 +67,22 @@ WodbyInstall plugin. The superuser comes from `MATOMO_ADMIN_USERNAME` (default `
 `MATOMO_ADMIN_EMAIL`, and the first website from `MATOMO_SITE_URL`, named `MATOMO_SITE_NAME`. It refuses to install
 without a password and email, or into a database that already has tables.
 
+### Another Matomo release
+
+An image built on this one can replace Matomo with another verified release of the same major version, for example
+to keep Matomo's version in an application's repository:
+
+```dockerfile
+FROM wodby/matomo:5-apache
+USER root
+RUN apk add --no-cache -t .gpg gnupg && matomo-use-release 5.14.1 && apk del --purge .gpg
+USER wodby
+```
+
+`matomo-use-release` downloads the release, checks its signature and puts it in place of the image's Matomo, keeping
+the WodbyInstall plugin, the GeoLite database, Matomo's `.htaccess` files and the links to the files directory. It
+refuses a version of another major and does nothing when the version is the image's own.
+
 ## Environment Variables
 
 | Variable                            | Default Value        | Description |
