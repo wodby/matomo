@@ -4,7 +4,7 @@
 BASE_IMAGE_REVISION ?= $(BASE_IMAGE_STABILITY_TAG)
 IMAGE_REVISION ?= $(STABILITY_TAG)
 
-MATOMO_VER ?= 5.14.2
+MATOMO_VER ?= 5.14.3
 MATOMO_MINOR_VER ?= $(shell echo "${MATOMO_VER}" | grep -oE '^[0-9]+\.[0-9]+')
 
 # VARIANT=apache builds the Wodby 2 image: Matomo served by Apache and PHP-FPM

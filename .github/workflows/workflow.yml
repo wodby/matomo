@@ -24,7 +24,7 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
-        version: '5.14.2'
+        version: '5.14.3'
         php_ver: 8.2
         tags: 5.14,5,latest
 
@@ -40,7 +40,7 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
-        version: '5.14.2'
+        version: '5.14.3'
         php_ver: 8.2
         variant: apache
         tags: 5.14-apache,5-apache
