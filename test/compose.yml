@@ -16,6 +16,7 @@ services:
     volumes:
       - codebase:/var/www/html
       - ./tests.sh:/usr/local/bin/tests.sh
+      - ./update.sh:/usr/local/bin/update.sh
 
 volumes:
   codebase:

@@ -10,4 +10,5 @@ docker compose up -d
 docker compose exec -T nginx make check-ready -f /usr/local/bin/actions.mk
 docker compose exec -T matomo make init -f /usr/local/bin/actions.mk
 docker compose exec -T matomo tests.sh
+docker compose exec -T matomo update.sh
 docker compose down

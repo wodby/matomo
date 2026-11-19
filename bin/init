@@ -22,13 +22,23 @@ else
     if [[ "${res}" == 0 ]]; then
         echo "Current version of ${APP_NAME} is outdated (${current_ver}), updating to ${latest_ver}..."
         rsync -a "${src_dir}/" "${APP_ROOT}/"
-        if [[ "${latest_ver}" =~ "5." && "${current_ver}" =~ "4." ]]; then
-            rm "${APP_ROOT}/plugins/CoreConsole/Commands/GenerateAngularComponent.php"
-            rm "${APP_ROOT}/plugins/CoreConsole/Commands/GenerateAngularDirective.php"
+        # Matomo 5 dropped files that an update from Matomo 4 leaves behind.
+        # Compare major versions: a pattern such as "4." also matches 5.14.2.
+        if [[ "${latest_ver%%.*}" == 5 && "${current_ver%%.*}" == 4 ]]; then
+            rm -f "${APP_ROOT}/plugins/CoreConsole/Commands/GenerateAngularComponent.php" \
+                "${APP_ROOT}/plugins/CoreConsole/Commands/GenerateAngularDirective.php"
             su-exec wodby php console diagnostics:unexpected-files --delete -n
         fi
+        echo "Complete! ${APP_NAME} files have been updated to ${latest_ver}"
+    fi
+
+    # Update the database whenever Matomo is installed, not only right after the
+    # files are updated: a run that stopped between the two steps leaves new
+    # files with an old database, and the next run sees no newer version.
+    # Without pending updates, this changes nothing.
+    config="${APP_ROOT}/config/config.ini.php"
+    if [[ -f "${config}" ]] && ! grep -q '^installation_in_progress' "${config}"; then
         su-exec wodby php console core:update --yes
-        echo "Complete! ${APP_NAME} has been successfully updated to ${latest_ver}"
     fi
 
     chown www-data:www-data "${APP_ROOT}/matomo.js"
