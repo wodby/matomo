@@ -8,6 +8,19 @@ fi
 
 src_dir="/usr/src/matomo"
 
+# Succeeds when Matomo is installed, by the rule Matomo itself applies: the
+# local settings have a database user and no installation is in progress.
+# Opening the web installer creates the settings file before the database is
+# set up, so the file alone does not mean Matomo is installed.
+matomo_installed() {
+    local config="${APP_ROOT}/config/config.ini.php"
+
+    [[ -f "${config}" ]] && php -r '
+        $c = parse_ini_file($argv[1], true, INI_SCANNER_RAW) ?: [];
+        exit(!empty($c["database"]["username"]) && empty($c["General"]["installation_in_progress"]) ? 0 : 1);
+    ' "${config}"
+}
+
 if [[ ! -f "${APP_ROOT}/piwik.php" ]]; then
     echo >&2 "${APP_NAME} not found in ${APP_ROOT} - copying now..."
     rsync -a "${src_dir}/" "${APP_ROOT}/"
@@ -36,8 +49,7 @@ else
     # files are updated: a run that stopped between the two steps leaves new
     # files with an old database, and the next run sees no newer version.
     # Without pending updates, this changes nothing.
-    config="${APP_ROOT}/config/config.ini.php"
-    if [[ -f "${config}" ]] && ! grep -q '^installation_in_progress' "${config}"; then
+    if matomo_installed; then
         su-exec wodby php console core:update --yes
     fi
 
